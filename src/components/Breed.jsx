@@ -5,7 +5,7 @@ function Breed(props) {
         <div>
             <h3>{props.title}</h3>
             <p>{props.description}</p>
-            <Link to="/details">See details</Link>
+            <Link to={'details/' + props.id}>See details</Link>
         </div>
     )
 }
