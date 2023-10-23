@@ -17,6 +17,12 @@ function Home() {
         fetchBreeds();//neaparat apelam functia ca ea sa se execute, acum deja putem lucra cu cinst breeds pentru a afisa datele la noi in pagina
     }, []);
 
+    const handleFirstClick = async () => {
+        const response = await fetch(breeds.links.current);
+        const data = await response.json();
+        setBreeds(data);
+    }
+
     const handleNextClick = async () => {
         const response = await fetch(breeds.links.next);//asteptam raspunsul
         const data = await response.json();//raspunsul va fi transformat in obiect JS
@@ -30,6 +36,12 @@ function Home() {
 
         setBreeds(data);//dupa ce am scos datele din API le transmitem la constanta breeds din useState
     };
+
+    const handleLastClick = async () => {
+        const response = await fetch(breeds.links.last);
+        const data = await response.json();
+        setBreeds(data);
+    }
 
     return (
         <>
@@ -46,9 +58,12 @@ function Home() {
             </main>
 
             <footer>
-               <button disabled={breeds.links?.prev === undefined} onClick={() => handleNPrevClick()}>Previous</button> {/* cu "?" ne asiguram ca aceasta proprietatea exista
+                <button disabled={breeds.links?.current === undefined} onClick={() => handleFirstClick()}>First</button>
+                <button disabled={breeds.links?.prev === undefined} onClick={() => handleNPrevClick()}>Previous</button> {/* cu "?" ne asiguram ca aceasta proprietatea exista
                links prev si next sunt din API */}
                 <button disabled={breeds.links?.next === undefined} onClick={() => handleNextClick()}>Next</button>
+                <button disabled={breeds.links?.last === undefined} onClick={() => handleLastClick()}>Last</button>
+
             </footer>
         </>
     );
