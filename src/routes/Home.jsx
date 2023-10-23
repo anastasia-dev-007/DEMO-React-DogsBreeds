@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breed from "../components/Breed";
+import Footer from "../components/Footer";
 
 function Home() {
     const [breeds, setBreeds] = useState({});
-    const [selectedBreed, setSelectedBreed] = useState({});
+    const [selectedBreed, setSelectedBreed] = useState([]);
 
     useEffect(() => {
         const fetchBreeds = async () => {//await+async trebuie sa mearga impreuna
@@ -31,7 +32,7 @@ function Home() {
         setBreeds(data);//dupa ce am scos datele din API le transmitem la constanta breeds din useState
     };
 
-    const handleNPrevClick = async () => {
+    const handlePrevClick = async () => {
         const response = await fetch(breeds.links.prev);//asteptam raspunsul
         const data = await response.json();//raspunsul va fi transformat in obiect JS
 
@@ -60,14 +61,13 @@ function Home() {
                 }
             </main>
 
-            <footer>
-                <button disabled={breeds.links?.current === undefined} onClick={() => handleFirstClick()}>First</button>
-                <button disabled={breeds.links?.prev === undefined} onClick={() => handleNPrevClick()}>Previous</button> {/* cu "?" ne asiguram ca aceasta proprietatea exista
-               links prev si next sunt din API */}
-                <button disabled={breeds.links?.next === undefined} onClick={() => handleNextClick()}>Next</button>
-                <button disabled={breeds.links?.last === undefined} onClick={() => handleLastClick()}>Last</button>
-
-            </footer>
+            <Footer
+                breeds={breeds}
+                handleFirstClick={handleFirstClick}
+                handlePrevClick={handlePrevClick}
+                handleNextClick={handleNextClick}
+                handleLastClick={handleLastClick}
+            />
         </>
     );
 };
