@@ -5,6 +5,7 @@ import Breed from "../components/Breed";
 
 function Home() {
     const [breeds, setBreeds] = useState({});
+    const [selectedBreed, setSelectedBreed] = useState({});
 
     useEffect(() => {
         const fetchBreeds = async () => {//await+async trebuie sa mearga impreuna
@@ -45,9 +46,11 @@ function Home() {
 
     return (
         <>
+            <input type="text" placeholder="Search..." onChange={(event) => setSelectedBreed(event.target.value)}></input>
+
             <main className="homeContainer">
                 {
-                    breeds.data?.map(item => (//cu "?" ne asigram ca avem date in acest obiect. fara "?" nu se va afisa nimic pentru ca obiectul default in constanta e null si el prima data face apel la acel obiect nul, si dupa asta la API
+                    breeds.data?.filter(item => item.attributes.name.toLowerCase().includes(selectedBreed)).map(item => (//cu "?" ne asigram ca avem date in acest obiect. fara "?" nu se va afisa nimic pentru ca obiectul default in constanta e null si el prima data face apel la acel obiect nul, si dupa asta la API
                         <Breed
                             key={item.id}
                             id={item.id}
