@@ -20,7 +20,7 @@ function Home() {
     }, []);
 
     const handleFirstClick = async () => {
-        const response = await fetch(breeds.links.current);
+        const response = await fetch(breeds.links.first);
         const data = await response.json();
         setBreeds(data);
     }
