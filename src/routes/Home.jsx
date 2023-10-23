@@ -17,6 +17,20 @@ function Home() {
         fetchBreeds();//neaparat apelam functia ca ea sa se execute, acum deja putem lucra cu cinst breeds pentru a afisa datele la noi in pagina
     }, []);
 
+    const handleNextClick = async () => {
+        const response = await fetch(breeds.links.next);//asteptam raspunsul
+        const data = await response.json();//raspunsul va fi transformat in obiect JS
+
+        setBreeds(data);//dupa ce am scos datele din API le transmitem la constanta breeds din useState
+    };
+
+    const handleNPrevClick = async () => {
+        const response = await fetch(breeds.links.prev);//asteptam raspunsul
+        const data = await response.json();//raspunsul va fi transformat in obiect JS
+
+        setBreeds(data);//dupa ce am scos datele din API le transmitem la constanta breeds din useState
+    };
+
     return (
         <>
             <main className="homeContainer">
@@ -32,8 +46,9 @@ function Home() {
             </main>
 
             <footer>
-                <button>Previous</button>
-                <button>Next</button>
+               <button disabled={breeds.links?.prev === undefined} onClick={() => handleNPrevClick()}>Previous</button> {/* cu "?" ne asiguram ca aceasta proprietatea exista
+               links prev si next sunt din API */}
+                <button disabled={breeds.links?.next === undefined} onClick={() => handleNextClick()}>Next</button>
             </footer>
         </>
     );
